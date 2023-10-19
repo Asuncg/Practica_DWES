@@ -51,10 +51,9 @@ public class EmpleadoController extends HttpServlet {
                     System.out.println(empleado);
                 }
 
-                request.setAttribute("lista", lista);
+                request.setAttribute("listaEmpleados", lista);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/listar.jsp");
                 requestDispatcher.forward(request, response);
-
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

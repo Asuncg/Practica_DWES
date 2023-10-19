@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class ConexionDB {
     public static Connection getConnection() throws SQLException {
         final String USER = "root";
-        final String PASS = "admin";
+        final String PASS = "123456";
         final String DB_NAME = "empresa";
         final String CONN_URL = "jdbc:mariadb://localhost:3306/" + DB_NAME;
         Connection conn = null;

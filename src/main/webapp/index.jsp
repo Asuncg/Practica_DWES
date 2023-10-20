@@ -10,8 +10,8 @@
 <br/>
 <ul>
   <li><a href="empleados?opcion=listar"> Mostrar información de los empleados</a></li>
-  <li>Mostrar salario existente de un empleado</li>
-  <li>Modificar los datos de un empleado existente</li>
+  <li><a href="forms/sueldoform.jsp">Mostrar salario existente de un empleado</a></li>
+  <li><a href="forms/buscarempleado.jsp">Modificar los datos de un empleado existente</a></li>
 
 </ul>
 </body>

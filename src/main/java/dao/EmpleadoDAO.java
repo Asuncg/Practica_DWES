@@ -102,6 +102,52 @@ public class EmpleadoDAO {
         return empleado;
     }
 
+    public Empleado findAByName(String nombreEmpleado) throws SQLException, DatosNoCorrectosException {
+        Empleado empleado = null;
+
+        try {
+            conn = ConexionDB.getConnection();
+            PreparedStatement pt = null;
+
+            String query = "SELECT nombre, dni, sexo, categoria, anyos FROM empleados WHERE dni = ?";
+            pt = conn.prepareStatement(query);
+
+            pt.setString(1, nombreEmpleado);
+
+            ResultSet rs = pt.executeQuery();
+
+            if (rs.next()) {
+                String nombre = rs.getString("nombre");
+                String dni = rs.getString("dni");
+                char sexo = rs.getString("sexo").charAt(0);
+                int categoria = rs.getInt("categoria");
+                double anyos = rs.getDouble("anyos");
+
+                empleado = new Empleado(nombre, dni, sexo, categoria, anyos);
+
+            } else {
+
+                System.out.println("No se encontró ningún empleado con el nombre proporcionado");
+
+            }
+
+        } catch (DatosNoCorrectosException e) {
+
+            throw new RuntimeException(e);
+
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return empleado;
+    }
+
+
     public void altaEmpleado(String nombre, String dni, char sexo, int categoria, double anyos) throws SQLException {
         try {
             conn = ConexionDB.getConnection();

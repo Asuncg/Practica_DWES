@@ -43,10 +43,14 @@ public class EmpleadoController extends HttpServlet {
                 requestDispatcher.forward(request, response);
             } catch (SQLException e) {
                 e.printStackTrace();
-                // Manejar excepciones adecuadamente
+
             } catch (DatosNoCorrectosException e) {
                 throw new RuntimeException(e);
             }
+            //Finalmente divido los formularios de búsqueda en dos, para bsucar o bien por DNI o por nombre
+            //Ya que según yo entiendo, busco a un único empleado así que busco por campos supuestamente "Únicos"
+            //Y digo supuestamente porque podría haber dos "Paco"
+            //Código más que optimizable, pero me ciño al enunciado
         } else if ("buscar_dni".equals(opcion)) {
             // Búsqueda por DNI
             String dni = request.getParameter("dni");
@@ -58,7 +62,6 @@ public class EmpleadoController extends HttpServlet {
                     empleado = empleadoDAO.findAByDni(dni);
                 } catch (SQLException | DatosNoCorrectosException e) {
                     e.printStackTrace();
-                    // Manejar excepciones adecuadamente
                 }
             }
 
@@ -80,7 +83,7 @@ public class EmpleadoController extends HttpServlet {
                     empleado = empleadoDAO.findAByName(nombre);
                 } catch (SQLException | DatosNoCorrectosException e) {
                     e.printStackTrace();
-                    // Manejar excepciones adecuadamente
+
                 }
             }
 

@@ -25,28 +25,28 @@
             <div class="header">DNI</div>
             <div class="cell"><%= empleado.dni %></div>
             <div class="cell">
-                <a href="modificarEmpleado.jsp?campo=dni&valor=<%= empleado.dni %>">Modificar</a>
+                <a href="#">Modificar</a>
             </div>
         </div>
         <div class="row">
             <div class="header">Sexo</div>
             <div class="cell"><%= empleado.sexo %></div>
             <div class="cell">
-                <a href="modificarEmpleado.jsp?campo=dni&valor=<%= empleado.sexo %>">Modificar</a>
+                <a href="#">Modificar</a>
             </div>
         </div>
         <div class="row">
             <div class="header">Años</div>
             <div class="cell"><%= empleado.anyos %></div>
             <div class="cell">
-                <a href="modificarEmpleado.jsp?campo=anyos&valor=<%= empleado.anyos %>">Modificar</a>
+                <a href="#">Modificar</a>
             </div>
         </div>
         <div class="row">
             <div class="header">Categoría</div>
             <div class="cell"><%= empleado.getCategoria() %></div>
             <div class="cell">
-                <a href="modificarEmpleado.jsp?campo=categoria&valor=<%= empleado.getCategoria() %>">Modificar</a>
+                <a href="#">Modificar</a>
             </div>
         </div>
     </div>
@@ -59,8 +59,8 @@
         }
     %>
 <p>
-    <a class="button" href="index.jsp">Volver</a>
-
+    <a class="button" href="index.jsp">Volver al menú</a>
+    <a class="button" href="forms/buscarempleado.jsp">Buscar otro empleado</a>
 </p>
 </div>
 </body>

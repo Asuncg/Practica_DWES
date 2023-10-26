@@ -11,19 +11,29 @@
     String dni = (String) request.getAttribute("dni");
     double sueldo = (Double) request.getAttribute("sueldo");
 %>
-<%
-    if (sueldo > 0) {
-%>
-<p>El sueldo del empleado con DNI <%= dni %> es: <%= sueldo %>
-</p>
-<%
-} else {
-%>
-<p>DNI no proporcionado o empleado no encontrado.</p>
-<%
-    }
-%>
-<a class="button" href="index.jsp">Volver</a>
+<div class="styled-div">
+    <div class="rowlistar">
+        <%
+            if (sueldo > 0) {
+        %>
+        <div class="celllistar">DNI del empleado: <b><%= dni %>
+        </b> - Sueldo: <b><%= sueldo %>
+        </b></div>
+    </div>
+    <%
+    } else {
+    %>
+    <div class="celllistar">
+        <p>DNI no proporcionado o empleado no encontrado.</p>
+    </div>
+    <%
+        }
+    %>
+</div>
+</div>
+<p></p>
+<a class="button" href="/Practica_DWES/index.jsp">Volver al menú</a>
+<a class="button" href="/Practica_DWES/forms/sueldoform.jsp">Buscar otro empleado</a>
 
 </body>
 </html>

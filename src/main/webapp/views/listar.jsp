@@ -32,7 +32,7 @@
         <% } %>
     </div>
 </div>
-<a class="button" href="index.jsp">Volver</a>
+<a class="button" href="index.jsp">Volver al menú</a>
 
 </body>
 </html>

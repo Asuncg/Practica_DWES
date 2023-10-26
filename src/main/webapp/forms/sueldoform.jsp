@@ -12,7 +12,8 @@
     <br>
     <input type="submit" value="Consultar Sueldo">
 </form>
-<a class="button" href="index.jsp">Volver</a>
+
+<a class="button" href="../index.jsp">Volver al menú</a>
 
 </body>
 </html>

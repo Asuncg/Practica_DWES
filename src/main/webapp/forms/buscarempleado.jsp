@@ -6,6 +6,7 @@
 <body>
 <h1>Búsqueda de Empleados</h1>
 <form action="../empleados" method="get">
+    <input type="hidden" name="opcion" value="buscar">
     <label for="dni">DNI:</label>
     <input type="text" name="dni" id="dni">
     <br>

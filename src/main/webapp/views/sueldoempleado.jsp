@@ -21,5 +21,6 @@
 <%
     }
 %>
+<p><a href="index.jsp">Volver</a></p>
 </body>
 </html>

@@ -12,7 +12,6 @@ import model.Empleado;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(description = "administra peticiones para la tabla empleados", urlPatterns = {"/empleados"})
@@ -31,15 +30,14 @@ public class EmpleadoController extends HttpServlet {
         }
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String opcion = request.getParameter("opcion");
 
         if ("listar".equals(opcion)) {
             // Listar todos los empleados
             EmpleadoDAO empleadoDAO = new EmpleadoDAO();
-            List<Empleado> lista = new ArrayList<>();
             try {
-                lista = empleadoDAO.findAll();
+                List<Empleado> lista = empleadoDAO.findAll();
                 request.setAttribute("listaEmpleados", lista);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/listar.jsp");
                 requestDispatcher.forward(request, response);
@@ -53,35 +51,35 @@ public class EmpleadoController extends HttpServlet {
             // Búsqueda por DNI o nombre
             String dni = request.getParameter("dni");
             String nombre = request.getParameter("nombre");
+            Empleado empleado = null; // Variable para almacenar el empleado encontrado
 
-            if ((dni != null && !dni.isEmpty()) || (nombre != null && !nombre.isEmpty())) {
+            if (dni != null && !dni.isEmpty()) {
                 EmpleadoDAO empleadoDAO = new EmpleadoDAO();
-                List<Empleado> empleados = new ArrayList<>();
                 try {
                     // Intentar buscar por DNI
-                    if (dni != null && !dni.isEmpty()) {
-                        Empleado empleadoDNI = empleadoDAO.findAByDni(dni);
-                        if (empleadoDNI != null) {
-                            empleados.add(empleadoDNI);
-                        }
-                    }
-                    // Intentar buscar por nombre
-                    if (nombre != null && !nombre.isEmpty()) {
-                        Empleado empleadoNombre = empleadoDAO.findAByName(nombre);
-                        if (empleadoNombre != null) {
-                            empleados.add(empleadoNombre);
-                        }
-                    }
-
-                    request.setAttribute("empleados", empleados);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ResultadoBusqueda.jsp");
-                    requestDispatcher.forward(request, response);
+                    empleado = empleadoDAO.findAByDni(dni);
                 } catch (SQLException | DatosNoCorrectosException e) {
                     e.printStackTrace();
                     // Manejar excepciones adecuadamente
                 }
+            } else if (nombre != null && !nombre.isEmpty()) {
+                EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+                try {
+                    // Intentar buscar por nombre
+                    empleado = empleadoDAO.findAByName(nombre);
+                } catch (SQLException | DatosNoCorrectosException e) {
+                    e.printStackTrace();
+                    // Manejar excepciones adecuadamente
+                }
+            }
+
+            if (empleado != null) {
+                // Si se encontró un empleado, lo establecemos como un atributo y reenviamos la solicitud al JSP.
+                request.setAttribute("empleado", empleado);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/empleadoencontrado.jsp");
+                requestDispatcher.forward(request, response);
             } else {
-                // Manejar cuando no se proporciona un valor en la búsqueda
+                // Manejar cuando no se encuentra un empleado
                 response.sendRedirect("BusquedaEmpleado.jsp");
             }
         }

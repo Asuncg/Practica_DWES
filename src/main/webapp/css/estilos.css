@@ -1,0 +1,144 @@
+body {
+    background-color: #333; /* Fondo gris oscuro */
+    color: #4CAF50; /* Texto en verde menos llamativo */
+    font-family: Arial, sans-serif;
+    text-align: center; /* Centra el texto en la página */
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 28px;
+    margin: 20px 0;
+    color: #4CAF50;
+}
+
+ul.menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul.menu li {
+    margin: 10px 0;
+}
+
+ul.menu li a.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Fondo verde para los botones del menú */
+    color: #fff; /* Texto en blanco */
+    text-decoration: none;
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s ease; /* Transición de color de fondo */
+}
+
+ul.menu li a.button:hover {
+    background-color: #45a049; /* Cambio de color de fondo al pasar el mouse */
+}
+
+form {
+    width: 30%;
+    margin: 20px auto;
+    background-color: #333; /* Fondo gris oscuro para los formularios */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+form label {
+    display: block;
+    margin: 10px 0;
+    color: #4CAF50; /* Texto en verde menos llamativo */
+}
+
+form input[type="text"] {
+    padding: 10px;
+    border: 1px solid #4CAF50; /* Borde en verde */
+    border-radius: 5px;
+}
+
+form input[type="submit"] {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Fondo verde para los botones de formulario */
+    color: #fff; /* Texto en blanco */
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.container {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.styled-div {
+    display: inline-block;
+    border: 1px solid #4CAF50;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border-collapse: collapse;
+    width: 60%;
+}
+
+.header {
+    background-color: #4CAF50;
+    color: white;
+    display: flex;
+    width: 10%;
+    padding: 5px;
+}
+
+.cell {
+    flex: 1;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #4CAF50;
+}
+
+.row {
+    display: flex;
+}
+
+/* estilos listar */
+
+
+.headerlistar {
+    background-color: #4CAF50;
+    color: white;
+    display: flex;
+}
+
+.celllistar {
+    flex: 1;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #4CAF50;
+}
+
+.rowlistar {
+    display: flex;
+}
+
+/* Estilo boton volver*/
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #45a049; /* Color de fondo en el hover */
+}

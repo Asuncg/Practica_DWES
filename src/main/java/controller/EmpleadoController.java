@@ -47,25 +47,36 @@ public class EmpleadoController extends HttpServlet {
             } catch (DatosNoCorrectosException e) {
                 throw new RuntimeException(e);
             }
-        } else if ("buscar".equals(opcion)) {
-            // Búsqueda por DNI o nombre
+        } else if ("buscar_dni".equals(opcion)) {
+            // Búsqueda por DNI
             String dni = request.getParameter("dni");
-            String nombre = request.getParameter("nombre");
-            Empleado empleado = null; // Variable para almacenar el empleado encontrado
+            Empleado empleado = null;
 
             if (dni != null && !dni.isEmpty()) {
                 EmpleadoDAO empleadoDAO = new EmpleadoDAO();
                 try {
-                    // Intentar buscar por DNI
                     empleado = empleadoDAO.findAByDni(dni);
                 } catch (SQLException | DatosNoCorrectosException e) {
                     e.printStackTrace();
                     // Manejar excepciones adecuadamente
                 }
-            } else if (nombre != null && !nombre.isEmpty()) {
+            }
+
+            if (empleado != null) {
+                request.setAttribute("empleado", empleado);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/empleadoencontrado.jsp");
+                requestDispatcher.forward(request, response);
+            } else {
+                response.sendRedirect("/Practica_DWES/views/empleadonoencontrado.jsp");
+            }
+        } else if ("buscar_nombre".equals(opcion)) {
+            // Búsqueda por nombre
+            String nombre = request.getParameter("nombre");
+            Empleado empleado = null;
+
+            if (nombre != null && !nombre.isEmpty()) {
                 EmpleadoDAO empleadoDAO = new EmpleadoDAO();
                 try {
-                    // Intentar buscar por nombre
                     empleado = empleadoDAO.findAByName(nombre);
                 } catch (SQLException | DatosNoCorrectosException e) {
                     e.printStackTrace();
@@ -74,13 +85,11 @@ public class EmpleadoController extends HttpServlet {
             }
 
             if (empleado != null) {
-                // Si se encontró un empleado, lo establecemos como un atributo y reenviamos la solicitud al JSP.
                 request.setAttribute("empleado", empleado);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/empleadoencontrado.jsp");
                 requestDispatcher.forward(request, response);
             } else {
-                // Manejar cuando no se encuentra un empleado
-                response.sendRedirect("BusquedaEmpleado.jsp");
+                response.sendRedirect("/Practica_DWES/views/empleadonoencontrado.jsp");
             }
         }
     }

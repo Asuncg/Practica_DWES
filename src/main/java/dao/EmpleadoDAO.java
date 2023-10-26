@@ -109,7 +109,7 @@ public class EmpleadoDAO {
             conn = ConexionDB.getConnection();
             PreparedStatement pt = null;
 
-            String query = "SELECT nombre, dni, sexo, categoria, anyos FROM empleados WHERE dni = ?";
+            String query = "SELECT nombre, dni, sexo, categoria, anyos FROM empleados WHERE nombre = ?";
             pt = conn.prepareStatement(query);
 
             pt.setString(1, nombreEmpleado);

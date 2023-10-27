@@ -17,7 +17,7 @@
             if (sueldo > 0) {
         %>
         <div class="celllistar">DNI del empleado: <b><%= dni %>
-        </b> - Sueldo: <b><%= sueldo %>
+        </b> - Sueldo: <b><%= String.format("%.0f", sueldo) %> €
         </b></div>
     </div>
     <%

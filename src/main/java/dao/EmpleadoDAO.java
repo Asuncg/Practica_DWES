@@ -8,9 +8,19 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase que proporciona métodos para acceder a la base de datos y realizar operaciones relacionadas con los empleados.
+ */
 public class EmpleadoDAO {
     Connection conn = null;
 
+    /**
+     * Recupera una lista de todos los empleados almacenados en la base de datos.
+     *
+     * @return Una lista de objetos Empleado.
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     * @throws DatosNoCorrectosException Si los datos recuperados de la base de datos no son correctos.
+     */
     public List<Empleado> findAll() throws SQLException, DatosNoCorrectosException {
 
         List<Empleado> listaEmpleados = new ArrayList<>();
@@ -57,6 +67,14 @@ public class EmpleadoDAO {
         return listaEmpleados;
     }
 
+    /**
+     * Busca un empleado por su número de DNI y lo devuelve.
+     *
+     * @param dniEmpleado El número de DNI del empleado que se va a buscar.
+     * @return El objeto Empleado encontrado o null si no se encuentra ningún empleado con ese DNI.
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     * @throws DatosNoCorrectosException Si los datos recuperados de la base de datos no son correctos.
+     */
     public Empleado findAByDni(String dniEmpleado) throws SQLException, DatosNoCorrectosException {
         Empleado empleado = null;
 
@@ -102,6 +120,14 @@ public class EmpleadoDAO {
         return empleado;
     }
 
+    /**
+     * Busca un empleado por su nombre y lo devuelve.
+     *
+     * @param nombreEmpleado El nombre del empleado que se va a buscar.
+     * @return El objeto Empleado encontrado o null si no se encuentra ningún empleado con ese nombre.
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     * @throws DatosNoCorrectosException Si los datos recuperados de la base de datos no son correctos.
+     */
     public Empleado findAByName(String nombreEmpleado) throws SQLException, DatosNoCorrectosException {
         Empleado empleado = null;
 
@@ -148,6 +174,16 @@ public class EmpleadoDAO {
     }
 
 
+    /**
+     * Agrega un nuevo empleado a la base de datos.
+     *
+     * @param nombre El nombre del empleado.
+     * @param dni El número de DNI del empleado.
+     * @param sexo El sexo del empleado.
+     * @param categoria La categoría del empleado.
+     * @param anyos Los años trabajados por el empleado.
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     */
     public void altaEmpleado(String nombre, String dni, char sexo, int categoria, double anyos) throws SQLException {
         try {
             conn = ConexionDB.getConnection();
@@ -182,6 +218,13 @@ public class EmpleadoDAO {
     }
 
 
+    /**
+     * Cambia la categoría de un empleado en la base de datos.
+     *
+     * @param dniEmpleado El número de DNI del empleado cuya categoría se va a cambiar.
+     * @param cat La nueva categoría a asignar al empleado.
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     */
     public void cambiarCategoria(String dniEmpleado, int cat) throws SQLException {
 
         try {
@@ -214,6 +257,13 @@ public class EmpleadoDAO {
         }
     }
 
+    /**
+     * Incrementa los años trabajados por un empleado en la base de datos.
+     *
+     * @param dniEmpleado El número de DNI del empleado cuyos años trabajados se van a incrementar.
+     * @param anyos Los años a incrementar en el registro del empleado.
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     */
     public void incrementarAnyos(String dniEmpleado, double anyos) throws SQLException {
 
         try {
@@ -246,6 +296,14 @@ public class EmpleadoDAO {
         }
     }
 
+
+    /**
+     * Cambia el nombre de un empleado en la base de datos.
+     *
+     * @param dniEmpleado El número de DNI del empleado cuyo nombre se va a cambiar.
+     * @param nombre El nuevo nombre a asignar al empleado.
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     */
     public void cambiarNombre(String dniEmpleado, String nombre) throws SQLException {
 
         try {
@@ -277,6 +335,13 @@ public class EmpleadoDAO {
         }
     }
 
+    /**
+     * Cambia el sexo de un empleado en la base de datos.
+     *
+     * @param dniEmpleado El número de DNI del empleado cuyo sexo se va a cambiar.
+     * @param sexo El nuevo sexo a asignar al empleado.
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     */
     public void cambiarSexo(String dniEmpleado, String sexo) throws SQLException {
 
         try {
@@ -308,6 +373,13 @@ public class EmpleadoDAO {
         }
     }
 
+    /**
+     * Cambia el número de DNI de un empleado en la base de datos.
+     *
+     * @param dniEmpleado El número de DNI del empleado cuyo DNI se va a cambiar.
+     * @param nuevoDni El nuevo número de DNI a asignar al empleado.
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     */
     public void cambiarDni(String dniEmpleado, String nuevoDni) throws SQLException {
 
         try {

@@ -12,6 +12,9 @@ import model.Sueldo;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Clase que gestiona las peticiones relacionadas con la tabla de sueldos.
+ */
 @WebServlet(description = "administra peticiones para la tabla sueldo", urlPatterns = {"/sueldo"})
 
 public class SueldoController extends HttpServlet {
@@ -21,6 +24,10 @@ public class SueldoController extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
+
+    /**
+     * Inicializa el servlet. Carga el controlador de la base de datos.
+     */
     public void init() {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
@@ -30,6 +37,14 @@ public class SueldoController extends HttpServlet {
         }
     }
 
+    /**
+     * Maneja las peticiones GET realizadas al servlet.
+     *
+     * @param request  La solicitud HTTP recibida.
+     * @param response La respuesta HTTP que se enviará.
+     * @throws ServletException Si hay un error en el servlet.
+     * @throws IOException      Si hay un error de E/S.
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Obtener el DNI del parámetro en la URL
         String dni = request.getParameter("dni");
@@ -60,8 +75,8 @@ public class SueldoController extends HttpServlet {
             response.getWriter().write("DNI no proporcionado.");
         }
     }
-
 }
+
 
 
 

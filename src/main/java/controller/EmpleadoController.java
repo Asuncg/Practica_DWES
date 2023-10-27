@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Clase que gestiona las peticiones relacionadas con la tabla de empleados.
+ */
 @WebServlet(description = "administra peticiones para la tabla empleados", urlPatterns = {"/empleados"})
 public class EmpleadoController extends HttpServlet {
 
@@ -21,6 +24,11 @@ public class EmpleadoController extends HttpServlet {
         super();
     }
 
+    /**
+     * Inicializa el servlet. Carga el controlador de la base de datos.
+     *
+     * @throws ServletException Si hay un error en la inicialización.
+     */
     public void init() throws ServletException {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
@@ -30,6 +38,14 @@ public class EmpleadoController extends HttpServlet {
         }
     }
 
+    /**
+     * Maneja las peticiones GET realizadas al servlet.
+     *
+     * @param request  La solicitud HTTP recibida.
+     * @param response La respuesta HTTP que se enviará.
+     * @throws ServletException Si hay un error en el servlet.
+     * @throws IOException      Si hay un error de E/S.
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String opcion = request.getParameter("opcion");
 

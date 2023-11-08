@@ -1,7 +1,7 @@
 html, body {
     height: 100%;
     font-family: Verdana, serif;
-    background-color: lightgray;
+    background: linear-gradient(to bottom, lightgray, white);
     color: #4CAF50;
     text-align: center;
     margin: 0;
@@ -15,7 +15,7 @@ div {
 }
 
 .container {
-    background-color: #333;
+    background: linear-gradient(to bottom, lightgray, white);
     margin: auto;
     width: 80%;
     box-shadow: 5px 5px 15px rgb(128, 128, 128);
@@ -93,7 +93,7 @@ div.menu a:visited {
 h1, h2, h3, h4 {
     color: #333;
     padding: 5px;
-    font-family: Unbounded, serif ;
+    font-family: Notable, serif ;
 }
 
 ul.menu {
@@ -122,9 +122,7 @@ ul.menu li a.button:hover {
 form {
     width: 60%;
     margin: 20px auto;
-    background-color: lightgray;
     padding: 20px;
-    border-radius: 10px;
 }
 
 form label {

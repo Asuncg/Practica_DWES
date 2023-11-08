@@ -18,19 +18,23 @@ public class Empleado extends Persona {
      * Anyos de la persona
      */
     public double anyos;
+    public int id;
 
     /**
      * Constructor para crear una instancia de Empleado con nombre, DNI, sexo, categoría y
      * años donde controlamos el rango de la categoría y de la edad.
      *
+     * @param id
      * @param nombre
      * @param dni
      * @param sexo
      * @param categoria
      * @param anyos
      */
-    public Empleado(String nombre, String dni, Character sexo, int categoria, double anyos) throws DatosNoCorrectosException {
+    public Empleado(int id, String nombre, String dni, Character sexo, int categoria, double anyos) throws DatosNoCorrectosException {
         super(nombre, dni, sexo);
+
+        this.id = id;
 
         if (categoria >= 1 && categoria <= 10) {
             this.categoria = categoria;
@@ -52,14 +56,16 @@ public class Empleado extends Persona {
      * Constructor para crear una instancia de Empleado con nombre, DNI, sexo,
      * donde asignamos un valor por defecto a la categoría y a la edad.
      *
+     * @param id
      * @param nombre
      * @param dni
      * @param sexo
      */
-    public Empleado(String nombre, String dni, Character sexo) {
+    public Empleado(int id, String nombre, String dni, Character sexo) {
         super(nombre, dni, sexo);
         this.anyos = 0;
         this.categoria = 1;
+        this.id = id;
     }
 
     /**
@@ -67,6 +73,13 @@ public class Empleado extends Persona {
      */
     public int getCategoria() {
         return categoria;
+    }
+
+    /**
+     * Getter de la id
+     */
+    public int getId() {
+        return id;
     }
 
     /**
@@ -80,13 +93,6 @@ public class Empleado extends Persona {
         }
     }
 
-    /**
-     *
-     * Incrementa en uno los años trabajados
-     */
-    public void incrAnyo() {
-        anyos++;
-    }
 
     /**
      *

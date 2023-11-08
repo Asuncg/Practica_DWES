@@ -7,10 +7,20 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase que proporciona métodos para acceder a la base de datos y realizar operaciones relacionadas con las nóminas de los empleados.
+ */
 public class NominasDAO {
 
     Connection conn = null;
 
+    /**
+     * Inserta un nuevo registro de sueldo en la base de datos.
+     *
+     * @param dniEmpleado El número de DNI del empleado cuyo sueldo se va a insertar.
+     * @param sueldo El sueldo a insertar.
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     */
     public void insertarSueldo(String dniEmpleado, double sueldo) throws SQLException {
 
         try {
@@ -43,45 +53,13 @@ public class NominasDAO {
         }
     }
 
-    public List<Sueldo> findAllSueldos() {
-
-        List<Sueldo> listaSueldos = new ArrayList<>();
-
-        try {
-            conn = ConexionDB.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT dni, sueldo FROM nominas");
-
-
-            while (rs.next()) {
-                String dni = rs.getString("dni");
-                double sueldo = rs.getDouble("sueldo");
-
-                Sueldo sueldos = new Sueldo(dni, sueldo);
-                listaSueldos.add(sueldos);
-            }
-
-            for (Sueldo sueldo : listaSueldos) {
-                sueldo.imprime();
-
-            }
-        } catch (SQLException e) {
-
-            System.out.println("Ocurrió algún error al conectar u operar con la BD");
-
-        } finally {
-
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return listaSueldos;
-    }
-
+    /**
+     * Busca un registro de sueldo por el número de DNI del empleado y lo devuelve.
+     *
+     * @param dniEmpleado El número de DNI del empleado cuyo sueldo se va a buscar.
+     * @return El objeto Sueldo encontrado o null si no se encuentra ningún registro de sueldo con ese DNI.
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     */
     public Sueldo findSueldoByDni(String dniEmpleado) throws SQLException {
         Sueldo sueldoEmpleado = null;
 
@@ -120,6 +98,13 @@ public class NominasDAO {
         return sueldoEmpleado;
     }
 
+    /**
+     * Actualiza el sueldo de un empleado en la base de datos.
+     *
+     * @param dniEmpleado El número de DNI del empleado cuyo sueldo se va a actualizar.
+     * @param sueldo El nuevo sueldo a actualizar.
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     */
     public void actualizarSueldo(String dniEmpleado, double sueldo) throws SQLException {
 
         try {

@@ -160,7 +160,7 @@ public class Main {
         return nomina.sueldo(empleado.getCategoria(), empleado.anyos);
 
     }
-
+/*
     public static void altaEmpleado() throws DatosNoCorrectosException, SQLException {
         Scanner sc = new Scanner(System.in);
         NominasDAO nominasDAO = new NominasDAO();
@@ -233,7 +233,7 @@ public class Main {
             System.out.println("Error al leer el archivo " + nombreArchivo);
         }
     }
-
+*/
 
 }
 

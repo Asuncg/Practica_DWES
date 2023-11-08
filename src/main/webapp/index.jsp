@@ -2,15 +2,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Práctica Nóminas</title>
     <link rel="stylesheet" type="text/css" href="css/estilos.css">
 </head>
 <body>
-<h1>Práctica Nóminas</h1>
-<ul class="menu">
-    <li><a class="button" href="empleados?opcion=listar">Mostrar información de los empleados</a></li>
-    <li><a class="button" href="forms/sueldoform.jsp">Mostrar salario existente de un empleado</a></li>
-    <li><a class="button" href="forms/buscarempleado.jsp">Modificar los datos de un empleado existente</a></li>
-</ul>
+<div class="container">
+    <%@ include file="header/header.jsp" %>
+    <div class="content">
+        <% if (request.getAttribute("content") == null || ((String) request.getAttribute("content")).isEmpty()) { %>
+        <%@ include file="views/main.jsp" %>
+        <% } else { %>
+        <jsp:include page="${content}"/>
+        <% } %>
+    </div>
+    <%@ include file="footer/footer.jsp" %>
 </body>
 </html>

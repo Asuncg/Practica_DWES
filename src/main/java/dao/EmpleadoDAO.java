@@ -28,17 +28,18 @@ public class EmpleadoDAO {
         try {
             conn = ConexionDB.getConnection();
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT nombre, dni, sexo, categoria, anyos FROM empleados");
+            ResultSet rs = st.executeQuery("SELECT id, nombre, dni, sexo, categoria, anyos FROM empleados");
 
 
             while (rs.next()) {
+                int id = rs.getInt("id");
                 String nombre = rs.getString("nombre");
                 String dni = rs.getString("dni");
                 char sexo = rs.getString("sexo").charAt(0);
                 int categoria = rs.getInt("categoria");
                 double anyos = rs.getDouble("anyos");
 
-                Empleado empleado = new Empleado(nombre, dni, sexo, categoria, anyos);
+                Empleado empleado = new Empleado(id, nombre, dni, sexo, categoria, anyos);
                 listaEmpleados.add(empleado);
             }
 
@@ -82,7 +83,7 @@ public class EmpleadoDAO {
             conn = ConexionDB.getConnection();
             PreparedStatement pt = null;
 
-            String query = "SELECT nombre, dni, sexo, categoria, anyos FROM empleados WHERE dni = ?";
+            String query = "SELECT id, nombre, dni, sexo, categoria, anyos FROM empleados WHERE dni = ?";
             pt = conn.prepareStatement(query);
 
             pt.setString(1, dniEmpleado);
@@ -90,13 +91,14 @@ public class EmpleadoDAO {
             ResultSet rs = pt.executeQuery();
 
             if (rs.next()) {
+                int id = rs.getInt("id");
                 String nombre = rs.getString("nombre");
                 String dni = rs.getString("dni");
                 char sexo = rs.getString("sexo").charAt(0);
                 int categoria = rs.getInt("categoria");
                 double anyos = rs.getDouble("anyos");
 
-                empleado = new Empleado(nombre, dni, sexo, categoria, anyos);
+                empleado = new Empleado(id, nombre, dni, sexo, categoria, anyos);
 
             } else {
 
@@ -135,7 +137,7 @@ public class EmpleadoDAO {
             conn = ConexionDB.getConnection();
             PreparedStatement pt = null;
 
-            String query = "SELECT nombre, dni, sexo, categoria, anyos FROM empleados WHERE nombre = ?";
+            String query = "SELECT id, nombre, dni, sexo, categoria, anyos FROM empleados WHERE nombre = ?";
             pt = conn.prepareStatement(query);
 
             pt.setString(1, nombreEmpleado);
@@ -143,13 +145,14 @@ public class EmpleadoDAO {
             ResultSet rs = pt.executeQuery();
 
             if (rs.next()) {
+                int id = rs.getInt("id");
                 String nombre = rs.getString("nombre");
                 String dni = rs.getString("dni");
                 char sexo = rs.getString("sexo").charAt(0);
                 int categoria = rs.getInt("categoria");
                 double anyos = rs.getDouble("anyos");
 
-                empleado = new Empleado(nombre, dni, sexo, categoria, anyos);
+                empleado = new Empleado(id, nombre, dni, sexo, categoria, anyos);
 
             } else {
 
@@ -411,4 +414,37 @@ public class EmpleadoDAO {
         }
     }
 
+    public void modificarEmpleado(int id, String nombre, String dni, char sexo, int categoria, double anyos) {
+        try {
+            conn = ConexionDB.getConnection();
+            PreparedStatement pt = null;
+
+            String query = "UPDATE empleados SET nombre = ?, dni = ?, sexo = ?, categoria = ?, anyos = ? WHERE id = ?";
+            pt = conn.prepareStatement(query);
+            pt.setString(1, nombre);
+            pt.setString(2, dni);
+            pt.setString(3, String.valueOf(sexo)); // Convierto el char en String
+            pt.setInt(4, categoria);
+            pt.setDouble(5, anyos);
+            pt.setInt(6, id);
+
+            int rowCount = pt.executeUpdate();
+
+            if (rowCount > 0) {
+                System.out.println("Empleado modificado correctamente");
+            } else {
+                System.out.println("No se encontró ningún empleado con el ID proporcionado");
+            }
+        } catch (SQLException e) {
+            System.out.println("Ocurrió algún error al conectar u operar con la BD");
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }

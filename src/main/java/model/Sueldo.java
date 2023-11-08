@@ -37,10 +37,4 @@ public class Sueldo {
         return sueldo;
     }
 
-    /**
-     * Imprime los datos del sueldo en la consola.
-     */
-    public void imprime() {
-        System.out.println("Dni: " + getDni() + ", Sueldo: " + getSueldo());
-    }
 }

@@ -18,6 +18,7 @@ public class Empleado extends Persona {
      * Anyos de la persona
      */
     public double anyos;
+
     public int id;
 
     /**
@@ -92,8 +93,6 @@ public class Empleado extends Persona {
             this.categoria = 1;
         }
     }
-
-
     /**
      *
      * Imprime los datos del Empleado en consola.

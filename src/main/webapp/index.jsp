@@ -4,6 +4,7 @@
 <head>
     <title>Práctica Nóminas</title>
     <link rel="stylesheet" type="text/css" href="css/estilos.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Unbounded">
 </head>
 <body>
 <div class="container">

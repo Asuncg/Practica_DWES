@@ -13,46 +13,6 @@ import java.util.List;
 public class NominasDAO {
 
     Connection conn = null;
-
-    /**
-     * Inserta un nuevo registro de sueldo en la base de datos.
-     *
-     * @param dniEmpleado El número de DNI del empleado cuyo sueldo se va a insertar.
-     * @param sueldo El sueldo a insertar.
-     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
-     */
-    public void insertarSueldo(String dniEmpleado, double sueldo) throws SQLException {
-
-        try {
-            conn = ConexionDB.getConnection();
-            PreparedStatement pt = null;
-
-            String query = "INSERT INTO nominas (dni, sueldo) VALUES (?, ?)";
-            pt = conn.prepareStatement(query);
-            pt.setString(1, dniEmpleado);
-            pt.setDouble(2, sueldo);
-
-            int rowCount = pt.executeUpdate();
-
-            if (rowCount > 0) {
-                System.out.println("Sueldo insertado");
-            } else {
-                System.out.println("No se pudo insertar el sueldo");
-            }
-
-
-        } finally {
-
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
     /**
      * Busca un registro de sueldo por el número de DNI del empleado y lo devuelve.
      *

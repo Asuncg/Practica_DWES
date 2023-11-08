@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Empleado;
+import model.Nomina;
 import model.Sueldo;
 
 import java.io.IOException;
@@ -193,41 +194,49 @@ public class EmpresaController extends HttpServlet {
 
         if ("modificarEmpleado".equals(opcion)) {
 
-            // Recupera los parámetros del formulario
             int id = Integer.parseInt(request.getParameter("id"));
             String nombre = request.getParameter("nombre");
             String dni = request.getParameter("dni");
             char sexo = request.getParameter("sexo").charAt(0);
             int categoria = Integer.parseInt(request.getParameter("categoria"));
             double anyos = Double.parseDouble(request.getParameter("anyos"));
+            double sueldo;
 
+            //Hacer comprobaciones si tengo tiempo
 
-            // Crea una instancia del DAO
             EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 
-            // Llama al método del DAO para modificar el empleado
+            Nomina nomina =new Nomina();
+
+            sueldo = nomina.sueldo(categoria, anyos);
+
+            try {
+                NominasDAO nominasDAO = new NominasDAO();
+                nominasDAO.actualizarSueldo(dni, sueldo);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
             empleadoDAO.modificarEmpleado(id, nombre, dni, sexo, categoria, anyos);
+
             String content = "views/empleadoguardado.jsp";
 
             request.setAttribute("content", content);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
             requestDispatcher.forward(request, response);
 
-
         } else if ("crearEmpleado".equals(opcion)) {
 
-            // Recupera los parámetros del formulario
             String nombre = request.getParameter("nombre");
             String dni = request.getParameter("dni");
             char sexo = request.getParameter("sexo").charAt(0);
             int categoria = Integer.parseInt(request.getParameter("categoria"));
             double anyos = Double.parseDouble(request.getParameter("anyos"));
 
+            //Hacer comprobaciones si tengo tiempo
 
-            // Crea una instancia del DAO
             EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 
-            // Llama al método del DAO para modificar el empleado
             try {
                 empleadoDAO.altaEmpleado( nombre, dni, sexo, categoria, anyos);
             } catch (SQLException e) {

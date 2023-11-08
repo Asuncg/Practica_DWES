@@ -25,20 +25,4 @@ public class ConexionDB {
         conn = DriverManager.getConnection(CONN_URL, USER, PASS);
         return conn;
     }
-
-    /**
-     * Cierra una conexión a la base de datos.
-     *
-     * @param conn Objeto Connection que se va a cerrar.
-     * @throws SQLException Si hay un error al cerrar la conexión.
-     */
-    public static void close(Connection conn) throws SQLException {
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

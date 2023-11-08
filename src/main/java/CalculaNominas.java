@@ -23,8 +23,4 @@ public void almacenaSueldo (String dni, double sueldo) throws IOException {
     }
 
 
-    private static double calculaSalario(Empleado empleado) {
-        Nomina nomina = new Nomina();
-        return nomina.sueldo(empleado.getCategoria(), empleado.anyos);
-    }
 }

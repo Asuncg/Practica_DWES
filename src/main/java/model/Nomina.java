@@ -63,4 +63,5 @@ public class Nomina {
         sueldo = categoria + bonus * anyos;
         return sueldo;
     }
+
 }

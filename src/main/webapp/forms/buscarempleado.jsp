@@ -1,4 +1,6 @@
-<h2>Búsqueda de Empleados</h2>
+<div class="standard">
+    <h2>Buscar empleado</h2>
+</div>
 
 <form action="empresa" method="get">
     <input type="hidden" name="opcion" value="buscar_dni">

@@ -97,4 +97,68 @@ public class NominasDAO {
         }
     }
 
+    public void insertarSueldo(String dniEmpleado, double sueldo) throws SQLException {
+
+        try {
+            conn = ConexionDB.getConnection();
+            PreparedStatement pt = null;
+
+            String query = "INSERT INTO nominas (dni, sueldo) VALUES (?, ?)";
+            pt = conn.prepareStatement(query);
+            pt.setString(1, dniEmpleado);
+            pt.setDouble(2, sueldo);
+
+
+            int rowCount = pt.executeUpdate();
+
+            if (rowCount > 0) {
+                System.out.println("Sueldo actualizado");
+            } else {
+                System.out.println("No se encontró ningún empleado con el DNI proporcionado");
+            }
+
+
+        } finally {
+
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    public void eliminarSueldo(String dni) throws SQLException {
+
+        try {
+            conn = ConexionDB.getConnection();
+            PreparedStatement pt = null;
+
+            String query = "DELETE FROM nominas WHERE dni = ?";
+            pt = conn.prepareStatement(query);
+            pt.setString(1, dni);
+
+
+
+            int rowCount = pt.executeUpdate();
+
+            if (rowCount > 0) {
+                System.out.println("Sueldo actualizado");
+            } else {
+                System.out.println("No se encontró ningún empleado con el DNI proporcionado");
+            }
+
+
+        } finally {
+
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }

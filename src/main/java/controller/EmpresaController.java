@@ -155,6 +155,28 @@ public class EmpresaController extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
             dispatcher.forward(request, response);
 
+        } else if ("modificarempleadoform".equals(opcion)) {
+            String dni = request.getParameter("dni");
+            Empleado empleado = null;
+
+            if (dni != null && !dni.isEmpty()) {
+                EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+                try {
+                    empleado = empleadoDAO.findAByDni(dni);
+                } catch (SQLException | DatosNoCorrectosException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (empleado != null) {
+
+                content = "forms/modificarempleado.jsp";
+
+                request.setAttribute("content", content);
+                request.setAttribute("empleado", empleado);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+                requestDispatcher.forward(request, response);
+            }
         } else if ("sueldoByDni".equals(opcion)) {
 
             String dni = request.getParameter("dni");
@@ -206,7 +228,8 @@ public class EmpresaController extends HttpServlet {
 
             EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 
-            Nomina nomina =new Nomina();
+            //Actualizar Sueldo
+            Nomina nomina = new Nomina();
 
             sueldo = nomina.sueldo(categoria, anyos);
 
@@ -225,25 +248,61 @@ public class EmpresaController extends HttpServlet {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
             requestDispatcher.forward(request, response);
 
-        } else if ("crearEmpleado".equals(opcion)) {
+        } else if ("altaempleado".equals(opcion)) {
 
             String nombre = request.getParameter("nombre");
             String dni = request.getParameter("dni");
             char sexo = request.getParameter("sexo").charAt(0);
             int categoria = Integer.parseInt(request.getParameter("categoria"));
             double anyos = Double.parseDouble(request.getParameter("anyos"));
+            double sueldo;
 
             //Hacer comprobaciones si tengo tiempo
+
+            //Actualizar Sueldo
+            Nomina nomina = new Nomina();
+
+            sueldo = nomina.sueldo(categoria, anyos);
+
+            try {
+                NominasDAO nominasDAO = new NominasDAO();
+                nominasDAO.insertarSueldo(dni, sueldo);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
             EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 
             try {
-                empleadoDAO.altaEmpleado( nombre, dni, sexo, categoria, anyos);
+                empleadoDAO.altaEmpleado(nombre, dni, sexo, categoria, anyos);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
 
             String content = "views/empleadoguardado.jsp";
+
+            request.setAttribute("content", content);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+            requestDispatcher.forward(request, response);
+
+        } else if ("bajaempleado".equals(opcion)) {
+
+            int id = Integer.parseInt(request.getParameter("id"));
+            String dni = request.getParameter("dni");
+
+            //Hacer comprobaciones si tengo tiempo
+            try {
+                NominasDAO nominasDAO = new NominasDAO();
+                nominasDAO.eliminarSueldo(dni);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+
+            empleadoDAO.bajaEmpleado(id);
+
+            String content = "views/empleadobaja.jsp";
 
             request.setAttribute("content", content);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");

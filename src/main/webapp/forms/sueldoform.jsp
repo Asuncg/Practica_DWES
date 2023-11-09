@@ -1,4 +1,6 @@
-<h2>Consulta de Sueldo</h2>
+<div class="standard">
+    <h2>Consultar sueldo Empleado</h2>
+</div>
 <form action="empresa" method="get">
     <input type="hidden" name="opcion" value="sueldoByDni">
     <label for="dni">Introduce el DNI del empleado:</label>

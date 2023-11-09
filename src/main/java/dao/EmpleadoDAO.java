@@ -28,7 +28,7 @@ public class EmpleadoDAO {
         try {
             conn = ConexionDB.getConnection();
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT id, nombre, dni, sexo, categoria, anyos FROM empleados");
+            ResultSet rs = st.executeQuery("SELECT id, nombre, dni, sexo, categoria, anyos FROM empleados WHERE alta = '1'");
 
 
             while (rs.next()) {
@@ -83,7 +83,7 @@ public class EmpleadoDAO {
             conn = ConexionDB.getConnection();
             PreparedStatement pt = null;
 
-            String query = "SELECT id, nombre, dni, sexo, categoria, anyos FROM empleados WHERE dni = ?";
+            String query = "SELECT id, nombre, dni, sexo, categoria, anyos FROM empleados WHERE dni = ? and alta = '1'";
             pt = conn.prepareStatement(query);
 
             pt.setString(1, dniEmpleado);
@@ -137,7 +137,7 @@ public class EmpleadoDAO {
             conn = ConexionDB.getConnection();
             PreparedStatement pt = null;
 
-            String query = "SELECT id, nombre, dni, sexo, categoria, anyos FROM empleados WHERE nombre = ?";
+            String query = "SELECT id, nombre, dni, sexo, categoria, anyos FROM empleados WHERE nombre = ? and alta = '1'";
             pt = conn.prepareStatement(query);
 
             pt.setString(1, nombreEmpleado);
@@ -225,7 +225,7 @@ public class EmpleadoDAO {
             conn = ConexionDB.getConnection();
             PreparedStatement pt = null;
 
-            String query = "UPDATE empleados SET nombre = ?, dni = ?, sexo = ?, categoria = ?, anyos = ? WHERE id = ?";
+            String query = "UPDATE empleados SET nombre = ?, dni = ?, sexo = ?, categoria = ?, anyos = ? WHERE id = ? and alta = '1'";
             pt = conn.prepareStatement(query);
             pt.setString(1, nombre);
             pt.setString(2, dni);
@@ -233,6 +233,36 @@ public class EmpleadoDAO {
             pt.setInt(4, categoria);
             pt.setDouble(5, anyos);
             pt.setInt(6, id);
+
+            int rowCount = pt.executeUpdate();
+
+            if (rowCount > 0) {
+                System.out.println("Empleado modificado correctamente");
+            } else {
+                System.out.println("No se encontró ningún empleado con el ID proporcionado");
+            }
+        } catch (SQLException e) {
+            System.out.println("Ocurrió algún error al conectar u operar con la BD");
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void bajaEmpleado(int id) {
+        try {
+            conn = ConexionDB.getConnection();
+            PreparedStatement pt = null;
+
+            String query = "UPDATE empleados SET alta = '0' WHERE id = ? ";
+            pt = conn.prepareStatement(query);
+
+            pt.setInt(1, id);
 
             int rowCount = pt.executeUpdate();
 

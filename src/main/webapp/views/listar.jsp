@@ -3,8 +3,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <% List<Empleado> empleados = (List<Empleado>) request.getAttribute("listaEmpleados"); %>
 
+<div class="standard">
+    <h2>Listar Empleados</h2>
+</div>
 
-<h2>Listar Empledos</h2>
 <div class="styled-div">
     <div class="headerlistar">
         <div class="celllistar">Nombre</div>

@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<h2>Resultado de Consulta de Sueldo</h2>
+<div class="standard">
+    <h2>Resultado</h2>
+</div>
 <%
     String dni = (String) request.getAttribute("dni");
     double sueldo = (Double) request.getAttribute("sueldo");
@@ -17,7 +19,7 @@
     } else {
     %>
     <div class="celllistar">
-        <p>DNI no proporcionado o empleado no encontrado.</p>
+        <p>No se ha encontrado ningún sueldo por el DNI <%= dni %>.</p>
     </div>
     <%
         }

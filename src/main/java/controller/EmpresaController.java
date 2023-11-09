@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Clase que gestiona las peticiones relacionadas con la tabla de empleados.
  */
-@WebServlet(description = "administra peticiones para la tabla empleados", urlPatterns = {"/empresa"})
+@WebServlet(description = "administra peticiones para la tabla empleados", urlPatterns = {"/empresas"})
 
 public class EmpresaController extends HttpServlet {
 

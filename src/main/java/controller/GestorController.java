@@ -1,3 +1,5 @@
+package controller;
+
 import dao.EmpleadoDAO;
 import dao.NominasDAO;
 import exception.DatosNoCorrectosException;

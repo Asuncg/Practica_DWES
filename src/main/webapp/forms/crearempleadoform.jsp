@@ -5,7 +5,7 @@
 </div>
 
 <form id="formCrearEmpleado" action="empresa" method="post">
-    <input type="hidden" name="opcion" value="crearEmpleado">
+    <input type="hidden" name="opcion" value="altaempleado">
     <div class="styled-div">
         <div class="row">
             <div class="header-modificar">Nombre</div>

@@ -18,7 +18,7 @@ public class EmpleadoDAO {
      * Recupera una lista de todos los empleados almacenados en la base de datos.
      *
      * @return Una lista de objetos Empleado.
-     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     * @throws SQLException              Si ocurre un error al interactuar con la base de datos.
      * @throws DatosNoCorrectosException Si los datos recuperados de la base de datos no son correctos.
      */
     public List<Empleado> findAll() throws SQLException, DatosNoCorrectosException {
@@ -29,36 +29,6 @@ public class EmpleadoDAO {
             conn = ConexionDB.getConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM empleados WHERE alta = '1'");
-            listaEmpleados(listaEmpleados, rs);
-        } catch (SQLException e) {
-
-            System.out.println("Ocurrió algún error al conectar u operar con la BD");
-
-        } catch (DatosNoCorrectosException e) {
-
-            throw new RuntimeException(e);
-
-        } finally {
-
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return listaEmpleados;
-    }
-    public List<Empleado> findAllBaja() throws SQLException, DatosNoCorrectosException {
-
-        List<Empleado> listaEmpleados = new ArrayList<>();
-
-        try {
-            conn = ConexionDB.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM empleados WHERE alta = '0'");
-
             listaEmpleados(listaEmpleados, rs);
         } catch (SQLException e) {
 
@@ -105,7 +75,7 @@ public class EmpleadoDAO {
      *
      * @param dniEmpleado El número de DNI del empleado que se va a buscar.
      * @return El objeto Empleado encontrado o null si no se encuentra ningún empleado con ese DNI.
-     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     * @throws SQLException              Si ocurre un error al interactuar con la base de datos.
      * @throws DatosNoCorrectosException Si los datos recuperados de la base de datos no son correctos.
      */
     public Empleado findAByDni(String dniEmpleado) throws SQLException, DatosNoCorrectosException {
@@ -159,7 +129,7 @@ public class EmpleadoDAO {
      *
      * @param nombreEmpleado El nombre del empleado que se va a buscar.
      * @return El objeto Empleado encontrado o null si no se encuentra ningún empleado con ese nombre.
-     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     * @throws SQLException              Si ocurre un error al interactuar con la base de datos.
      * @throws DatosNoCorrectosException Si los datos recuperados de la base de datos no son correctos.
      */
     public Empleado findAByName(String nombreEmpleado) throws SQLException, DatosNoCorrectosException {
@@ -212,14 +182,16 @@ public class EmpleadoDAO {
     /**
      * Agrega un nuevo empleado a la base de datos.
      *
-     * @param nombre El nombre del empleado.
-     * @param dni El número de DNI del empleado.
-     * @param sexo El sexo del empleado.
+     * @param nombre    El nombre del empleado.
+     * @param dni       El número de DNI del empleado.
+     * @param sexo      El sexo del empleado.
      * @param categoria La categoría del empleado.
-     * @param anyos Los años trabajados por el empleado.
+     * @param anyos     Los años trabajados por el empleado.
      * @throws SQLException Si ocurre un error al interactuar con la base de datos.
      */
     public void altaEmpleado(String nombre, String dni, char sexo, int categoria, double anyos) throws SQLException {
+
+
         try {
             conn = ConexionDB.getConnection();
             PreparedStatement pt = null;
@@ -316,24 +288,26 @@ public class EmpleadoDAO {
         }
     }
 
-    public void altaEmpleado(int id) {
+    public boolean existeDni(String dni) {
         try {
             conn = ConexionDB.getConnection();
             PreparedStatement pt = null;
 
-            String query = "UPDATE empleados SET alta = 1 WHERE id = ?";
+            String query = "SELECT 1 FROM empleados WHERE dni = ?";
             pt = conn.prepareStatement(query);
-            pt.setInt(1, id);
 
-            int rowCount = pt.executeUpdate();
+            pt.setString(1, dni);
 
-            if (rowCount > 0) {
-                System.out.println("Empleado modificado correctamente");
-            } else {
-                System.out.println("No se encontró ningún empleado con el ID proporcionado");
+            ResultSet rs = pt.executeQuery();
+
+            if (rs.next()) {
+                return true;
+
             }
         } catch (SQLException e) {
-            System.out.println("Ocurrió algún error al conectar u operar con la BD");
+
+            throw new RuntimeException(e);
+
         } finally {
             try {
                 if (conn != null) {
@@ -343,5 +317,6 @@ public class EmpleadoDAO {
                 throw new RuntimeException(e);
             }
         }
+        return false;
     }
 }

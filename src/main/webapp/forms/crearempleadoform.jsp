@@ -1,9 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="standard">
 <h2>Crear Empleado</h2>
 </div>
-
+<c:choose>
+    <c:when test="${not empty existError}">
+        <p>${existError}</p>
+    </c:when>
+</c:choose>
 <form id="formCrearEmpleado" action="empresa" method="post">
     <input type="hidden" name="opcion" value="nuevaAltaEmpleado">
     <div class="styled-div">
@@ -42,38 +46,4 @@
     <input type="submit" value="Crear Empleado">
 </form>
 
-<div class="standard">
-    <h2>Listar Empleados</h2>
-</div>
-
-<div class="styled-div">
-    <div class="headerlistar">
-        <div class="celllistar">Nombre</div>
-        <div class="celllistar">DNI</div>
-        <div class="celllistar">Sexo</div>
-        <div class="celllistar">Categoría</div>
-        <div class="celllistar">Años trabajados</div>
-        <div class="celllistar">Dar de Alta</div>
-    </div>
-
-    <c:forEach var="empleado" items="${listaEmpleados}">
-        <div class="rowlistar">
-            <div class="celllistar">${empleado.getNombre()}</div>
-            <div class="celllistar">${empleado.getDni()}</div>
-            <div class="celllistar">${empleado.getSexo()}</div>
-            <div class="celllistar">${empleado.categoria}</div>
-            <div class="celllistar">${empleado.anyos}</div>
-            <div class="celllistar">
-                <form action="empresa" method="post">
-                    <input type="hidden" name="opcion" value="altaEmpleado">
-                    <input type="hidden" name="id" value="${empleado.id}">
-                    <input type="hidden" name="dni" value="${empleado.dni}">
-                    <input type="hidden" name="categoria" value="${empleado.categoria}"
-                    <input type="hidden" name="anyos" value="${empleado.anyos}"
-                    <input type="submit" value="Alta Empleado">
-                </form>
-            </div>
-        </div>
-    </c:forEach>
-</div>
 

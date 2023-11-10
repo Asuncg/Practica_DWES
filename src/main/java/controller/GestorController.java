@@ -3,18 +3,21 @@ package controller;
 import dao.EmpleadoDAO;
 import dao.NominasDAO;
 import exception.DatosNoCorrectosException;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import model.Empleado;
 import model.Nomina;
 import model.Sueldo;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,7 +57,6 @@ public class GestorController extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String opcion = request.getParameter("opcion");
-        String content = "";
 
         switch (opcion) {
             case "listar":
@@ -99,13 +101,17 @@ public class GestorController extends HttpServlet {
                 modificarEmpleado(request, response);
                 break;
 
-            case "altaempleado":
+            case "nuevaAltaEmpleado":
                 darDeAltaEmpleado(request, response);
                 break;
 
             case "bajaempleado":
                 darDeBajaEmpleado(request, response);
                 break;
+            case "altaEmpleado":
+                altaEmpleado(request, response);
+                break;
+
         }
     }
 
@@ -208,11 +214,22 @@ public class GestorController extends HttpServlet {
     }
 
     private void mostrarFormCrearEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        content = "forms/crearempleadoform.jsp";
+        // Listar también todos los empleados de baja
+        EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+        try {
+            List<Empleado> listaEmpleadosBaja = empleadoDAO.findAllBaja();
 
-        request.setAttribute("content", content);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-        dispatcher.forward(request, response);
+            content = "forms/crearempleadoform.jsp";
+
+            request.setAttribute("content", content);
+            request.setAttribute("listaEmpleados", listaEmpleadosBaja);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher.forward(request, response);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (DatosNoCorrectosException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void mostrarFormModificarEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -366,4 +383,38 @@ public class GestorController extends HttpServlet {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(request, response);
     }
+
+    private void altaEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String dni = request.getParameter("dni");
+        int categoria = Integer.parseInt(request.getParameter("categoria"));
+        double anyos = Double.parseDouble(request.getParameter("anyos"));
+        double sueldo;
+
+        //Hacer comprobaciones si tengo tiempo
+
+        EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+
+        //Actualizar Sueldo
+        Nomina nomina = new Nomina();
+
+        sueldo = nomina.sueldo(categoria, anyos);
+
+        try {
+            NominasDAO nominasDAO = new NominasDAO();
+            nominasDAO.insertarSueldo(dni, sueldo);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        empleadoDAO.altaEmpleado(id);
+
+        String content = "views/empleadoguardado.jsp";
+
+        request.setAttribute("content", content);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+        requestDispatcher.forward(request, response);
+
+    }
+
 }

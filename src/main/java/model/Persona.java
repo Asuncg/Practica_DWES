@@ -49,4 +49,16 @@ public class Persona {
     public void imprime() {
         System.out.println("Nombre: " + nombre + ", Dni: " + dni + ", Sexo: " + sexo);
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public Character getSexo() {
+        return sexo;
+    }
 }

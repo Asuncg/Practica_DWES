@@ -1,7 +1,5 @@
-<%@ page import="model.Empleado" %>
-<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
-<% List<Empleado> empleados = (List<Empleado>) request.getAttribute("listaEmpleados"); %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="standard">
     <h2>Listar Empleados</h2>
@@ -15,20 +13,16 @@
         <div class="celllistar">Categoría</div>
         <div class="celllistar">Años trabajados</div>
     </div>
-    <% for (Empleado empleado : empleados) { %>
-    <div class="rowlistar">
-        <div class="celllistar"><%= empleado.nombre %>
+
+    <c:forEach var="empleado" items="${listaEmpleados}">
+        <div class="rowlistar">
+            <div class="celllistar">${empleado.getNombre()}</div>
+            <div class="celllistar">${empleado.getDni()}</div>
+            <div class="celllistar">${empleado.getSexo()}</div>
+            <div class="celllistar">${empleado.categoria}</div>
+            <div class="celllistar">${empleado.anyos}</div>
         </div>
-        <div class="celllistar"><%= empleado.dni %>
-        </div>
-        <div class="celllistar"><%= empleado.sexo %>
-        </div>
-        <div class="celllistar"><%= empleado.getCategoria() %>
-        </div>
-        <div class="celllistar"><%= empleado.anyos %>
-        </div>
-    </div>
-    <% } %>
+    </c:forEach>
 </div>
 
 

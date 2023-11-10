@@ -86,13 +86,21 @@ public class Empleado extends Persona {
     /**
      * Setter de la categoría
      */
-    public void setCategoria(int categoria) {
-        if (categoria >= 1 && categoria <= 10) {
-            this.categoria = categoria;
-        } else {
-            this.categoria = 1;
-        }
+
+    public double getAnyos() {
+        return anyos;
     }
+
+    public String getNombre() {
+        return super.getNombre();
+    }
+    public String getDni() {
+        return super.getDni();
+    }
+    public Character getSexo() {
+        return super.getSexo();
+    }
+
     /**
      *
      * Imprime los datos del Empleado en consola.

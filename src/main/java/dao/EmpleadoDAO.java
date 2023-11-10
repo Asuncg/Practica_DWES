@@ -28,25 +28,8 @@ public class EmpleadoDAO {
         try {
             conn = ConexionDB.getConnection();
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT id, nombre, dni, sexo, categoria, anyos FROM empleados WHERE alta = '1'");
-
-
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String dni = rs.getString("dni");
-                char sexo = rs.getString("sexo").charAt(0);
-                int categoria = rs.getInt("categoria");
-                double anyos = rs.getDouble("anyos");
-
-                Empleado empleado = new Empleado(id, nombre, dni, sexo, categoria, anyos);
-                listaEmpleados.add(empleado);
-            }
-
-            for (Empleado empleado : listaEmpleados) {
-                empleado.imprime();
-
-            }
+            ResultSet rs = st.executeQuery("SELECT * FROM empleados WHERE alta = '1'");
+            listaEmpleados(listaEmpleados, rs);
         } catch (SQLException e) {
 
             System.out.println("Ocurrió algún error al conectar u operar con la BD");
@@ -66,6 +49,55 @@ public class EmpleadoDAO {
             }
         }
         return listaEmpleados;
+    }
+    public List<Empleado> findAllBaja() throws SQLException, DatosNoCorrectosException {
+
+        List<Empleado> listaEmpleados = new ArrayList<>();
+
+        try {
+            conn = ConexionDB.getConnection();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM empleados WHERE alta = '0'");
+
+            listaEmpleados(listaEmpleados, rs);
+        } catch (SQLException e) {
+
+            System.out.println("Ocurrió algún error al conectar u operar con la BD");
+
+        } catch (DatosNoCorrectosException e) {
+
+            throw new RuntimeException(e);
+
+        } finally {
+
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return listaEmpleados;
+    }
+
+    private void listaEmpleados(List<Empleado> listaEmpleados, ResultSet rs) throws SQLException, DatosNoCorrectosException {
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String nombre = rs.getString("nombre");
+            String dni = rs.getString("dni");
+            char sexo = rs.getString("sexo").charAt(0);
+            int categoria = rs.getInt("categoria");
+            double anyos = rs.getDouble("anyos");
+
+            Empleado empleado = new Empleado(id, nombre, dni, sexo, categoria, anyos);
+            listaEmpleados.add(empleado);
+        }
+
+        for (Empleado empleado : listaEmpleados) {
+            empleado.imprime();
+
+        }
     }
 
     /**
@@ -262,6 +294,35 @@ public class EmpleadoDAO {
             String query = "UPDATE empleados SET alta = '0' WHERE id = ? ";
             pt = conn.prepareStatement(query);
 
+            pt.setInt(1, id);
+
+            int rowCount = pt.executeUpdate();
+
+            if (rowCount > 0) {
+                System.out.println("Empleado modificado correctamente");
+            } else {
+                System.out.println("No se encontró ningún empleado con el ID proporcionado");
+            }
+        } catch (SQLException e) {
+            System.out.println("Ocurrió algún error al conectar u operar con la BD");
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void altaEmpleado(int id) {
+        try {
+            conn = ConexionDB.getConnection();
+            PreparedStatement pt = null;
+
+            String query = "UPDATE empleados SET alta = 1 WHERE id = ?";
+            pt = conn.prepareStatement(query);
             pt.setInt(1, id);
 
             int rowCount = pt.executeUpdate();

@@ -5,7 +5,7 @@
 </div>
 <c:choose>
     <c:when test="${not empty existError}">
-        <p>${existError}</p>
+        <p class="error">${existError}</p>
     </c:when>
 </c:choose>
 <form id="formCrearEmpleado" action="empresa" method="post">

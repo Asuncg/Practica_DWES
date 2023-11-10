@@ -1,3 +1,3 @@
 <div class="standard">
-<h2>Empleado Guardado con éxito</h2>
+<h2>Empleado Guardado</h2>
 </div>

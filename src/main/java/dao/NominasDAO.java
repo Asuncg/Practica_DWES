@@ -97,6 +97,13 @@ public class NominasDAO {
         }
     }
 
+    /**
+     * Inserta un nuevo registro de sueldo en la base de datos.
+     *
+     * @param dniEmpleado El número de DNI del empleado cuyo sueldo se va a insertar.
+     * @param sueldo El sueldo a insertar.
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     */
     public void insertarSueldo(String dniEmpleado, double sueldo) throws SQLException {
 
         try {
@@ -129,6 +136,13 @@ public class NominasDAO {
             }
         }
     }
+
+    /**
+     * Elimina un registro de sueldo en la base de datos.
+     *
+     * @param dni El número de DNI del empleado cuyo sueldo se va a eliminar.
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+     */
     public void eliminarSueldo(String dni) throws SQLException {
 
         try {

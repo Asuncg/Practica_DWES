@@ -108,9 +108,20 @@ public class GestorController extends HttpServlet {
             case "bajaempleado":
                 darDeBajaEmpleado(request, response);
                 break;
+            case "reactivarEmpleado":
+                reactivarEmpleado(request, response);
+                break;
         }
     }
 
+    /**
+     * Lista todos los empleados y muestra la vista correspondiente.
+     *
+     * @param request  La solicitud HTTP recibida.
+     * @param response La respuesta HTTP que se enviará.
+     * @throws ServletException Si hay un error en el servlet.
+     * @throws IOException      Si hay un error de E/S.
+     */
     private void listarEmpleados(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Listar todos los empleados
         EmpleadoDAO empleadoDAO = new EmpleadoDAO();
@@ -131,6 +142,14 @@ public class GestorController extends HttpServlet {
 
     }
 
+    /**
+     * Busca un empleado por DNI y muestra la vista correspondiente.
+     *
+     * @param request  La solicitud HTTP recibida.
+     * @param response La respuesta HTTP que se enviará.
+     * @throws ServletException Si hay un error en el servlet.
+     * @throws IOException      Si hay un error de E/S.
+     */
     private void buscarPorDNI(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Búsqueda por DNI
         String dni = request.getParameter("dni");
@@ -162,6 +181,14 @@ public class GestorController extends HttpServlet {
         }
     }
 
+    /**
+     * Busca un empleado por nombre y muestra la vista correspondiente.
+     *
+     * @param request  La solicitud HTTP recibida.
+     * @param response La respuesta HTTP que se enviará.
+     * @throws ServletException Si hay un error en el servlet.
+     * @throws IOException      Si hay un error de E/S.
+     */
     private void buscarPorNombre(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Búsqueda por nombre
         String nombre = request.getParameter("nombre");
@@ -193,6 +220,14 @@ public class GestorController extends HttpServlet {
         }
     }
 
+    /**
+     * Muestra el formulario para buscar un empleado.
+     *
+     * @param request  La solicitud HTTP recibida.
+     * @param response La respuesta HTTP que se enviará.
+     * @throws ServletException Si hay un error en el servlet.
+     * @throws IOException      Si hay un error de E/S.
+     */
     private void buscarEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         content = "forms/buscarempleado.jsp";
 
@@ -201,6 +236,14 @@ public class GestorController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    /**
+     * Muestra el formulario para consultar el sueldo de un empleado.
+     *
+     * @param request  La solicitud HTTP recibida.
+     * @param response La respuesta HTTP que se enviará.
+     * @throws ServletException Si hay un error en el servlet.
+     * @throws IOException      Si hay un error de E/S.
+     */
     private void consultarSueldo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         content = "forms/sueldoform.jsp";
 
@@ -209,6 +252,14 @@ public class GestorController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    /**
+     * Muestra el formulario para crear un nuevo empleado.
+     *
+     * @param request  La solicitud HTTP recibida.
+     * @param response La respuesta HTTP que se enviará.
+     * @throws ServletException Si hay un error en el servlet.
+     * @throws IOException      Si hay un error de E/S.
+     */
     private void mostrarFormCrearEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Listar también todos los empleados de baja
         content = "forms/crearempleadoform.jsp";
@@ -218,6 +269,14 @@ public class GestorController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    /**
+     * Muestra el formulario para modificar un empleado.
+     *
+     * @param request  La solicitud HTTP recibida.
+     * @param response La respuesta HTTP que se enviará.
+     * @throws ServletException Si hay un error en el servlet.
+     * @throws IOException      Si hay un error de E/S.
+     */
     private void mostrarFormModificarEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String dni = request.getParameter("dni");
         Empleado empleado = null;
@@ -242,6 +301,14 @@ public class GestorController extends HttpServlet {
         }
     }
 
+    /**
+     * Obtiene el sueldo de un empleado por DNI y muestra la vista correspondiente.
+     *
+     * @param request  La solicitud HTTP recibida.
+     * @param response La respuesta HTTP que se enviará.
+     * @throws ServletException Si hay un error en el servlet.
+     * @throws IOException      Si hay un error de E/S.
+     */
     private void obtenerSueldoPorDNI(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String dni = request.getParameter("dni");
 
@@ -273,7 +340,14 @@ public class GestorController extends HttpServlet {
         }
     }
 
-
+    /**
+     * Modifica un empleado y muestra la vista correspondiente.
+     *
+     * @param request  La solicitud HTTP recibida.
+     * @param response La respuesta HTTP que se enviará.
+     * @throws ServletException Si hay un error en el servlet.
+     * @throws IOException      Si hay un error de E/S.
+     */
     private void modificarEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String nombre = request.getParameter("nombre");
@@ -309,6 +383,14 @@ public class GestorController extends HttpServlet {
 
     }
 
+    /**
+     * Da de alta un nuevo empleado y muestra la vista correspondiente.
+     *
+     * @param request  La solicitud HTTP recibida.
+     * @param response La respuesta HTTP que se enviará.
+     * @throws ServletException Si hay un error en el servlet.
+     * @throws IOException      Si hay un error de E/S.
+     */
     private void darDeAltaEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nombre = request.getParameter("nombre");
         String dni = request.getParameter("dni");
@@ -358,6 +440,14 @@ public class GestorController extends HttpServlet {
 
     }
 
+    /**
+     * Da de baja un empleado y muestra la vista correspondiente.
+     *
+     * @param request  La solicitud HTTP recibida.
+     * @param response La respuesta HTTP que se enviará.
+     * @throws ServletException Si hay un error en el servlet.
+     * @throws IOException      Si hay un error de E/S.
+     */
     private void darDeBajaEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String dni = request.getParameter("dni");
@@ -380,5 +470,41 @@ public class GestorController extends HttpServlet {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(request, response);
     }
+    /**
+     * Reactiva un empleado dado de baja y muestra la vista correspondiente.
+     *
+     * @param request  La solicitud HTTP recibida.
+     * @param response La respuesta HTTP que se enviará.
+     * @throws ServletException Si hay un error en el servlet.
+     * @throws IOException      Si hay un error de E/S.
+     */
+    private void reactivarEmpleado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String dni = request.getParameter("dni");
+        int categoria = Integer.parseInt(request.getParameter("categoria"));
+        double anyos = Double.parseDouble(request.getParameter("anyos"));
 
+        EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+
+        //Actualizar Sueldo
+        Nomina nomina = new Nomina();
+
+        double sueldo = nomina.sueldo(categoria, anyos);
+
+        try {
+            NominasDAO nominasDAO = new NominasDAO();
+            nominasDAO.insertarSueldo(dni, sueldo);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        empleadoDAO.reactivarEmpleado(id);
+
+        String content = "views/empleadoactivado.jsp";
+
+        request.setAttribute("content", content);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+        requestDispatcher.forward(request, response);
+
+    }
 }

@@ -51,6 +51,14 @@ public class EmpleadoDAO {
         return listaEmpleados;
     }
 
+    /**
+     * Llena la lista de empleados con los datos obtenidos de un ResultSet y luego imprime cada empleado en la consola.
+     *
+     * @param listaEmpleados La lista de empleados que se llenará con los datos del ResultSet.
+     * @param rs             El ResultSet que contiene los datos de los empleados.
+     * @throws SQLException              Si ocurre un error al interactuar con la base de datos.
+     * @throws DatosNoCorrectosException Si los datos recuperados de la base de datos no son correctos.
+     */
     private void listaEmpleados(List<Empleado> listaEmpleados, ResultSet rs) throws SQLException, DatosNoCorrectosException {
         while (rs.next()) {
             int id = rs.getInt("id");
@@ -59,15 +67,12 @@ public class EmpleadoDAO {
             char sexo = rs.getString("sexo").charAt(0);
             int categoria = rs.getInt("categoria");
             double anyos = rs.getDouble("anyos");
+            int alta = rs.getInt("alta");
 
-            Empleado empleado = new Empleado(id, nombre, dni, sexo, categoria, anyos);
+            Empleado empleado = new Empleado(id, nombre, dni, sexo, categoria, anyos, alta);
             listaEmpleados.add(empleado);
         }
 
-        for (Empleado empleado : listaEmpleados) {
-            empleado.imprime();
-
-        }
     }
 
     /**
@@ -85,7 +90,7 @@ public class EmpleadoDAO {
             conn = ConexionDB.getConnection();
             PreparedStatement pt = null;
 
-            String query = "SELECT id, nombre, dni, sexo, categoria, anyos FROM empleados WHERE dni = ? and alta = '1'";
+            String query = "SELECT id, nombre, dni, sexo, categoria, anyos, alta FROM empleados WHERE dni = ?";
             pt = conn.prepareStatement(query);
 
             pt.setString(1, dniEmpleado);
@@ -99,8 +104,9 @@ public class EmpleadoDAO {
                 char sexo = rs.getString("sexo").charAt(0);
                 int categoria = rs.getInt("categoria");
                 double anyos = rs.getDouble("anyos");
+                int alta = rs.getInt("alta");
 
-                empleado = new Empleado(id, nombre, dni, sexo, categoria, anyos);
+                empleado = new Empleado(id, nombre, dni, sexo, categoria, anyos, alta);
 
             } else {
 
@@ -139,7 +145,7 @@ public class EmpleadoDAO {
             conn = ConexionDB.getConnection();
             PreparedStatement pt = null;
 
-            String query = "SELECT id, nombre, dni, sexo, categoria, anyos FROM empleados WHERE nombre = ? and alta = '1'";
+            String query = "SELECT * FROM empleados WHERE nombre = ?";
             pt = conn.prepareStatement(query);
 
             pt.setString(1, nombreEmpleado);
@@ -153,8 +159,9 @@ public class EmpleadoDAO {
                 char sexo = rs.getString("sexo").charAt(0);
                 int categoria = rs.getInt("categoria");
                 double anyos = rs.getDouble("anyos");
+                int alta = rs.getInt("alta");
 
-                empleado = new Empleado(id, nombre, dni, sexo, categoria, anyos);
+                empleado = new Empleado(id, nombre, dni, sexo, categoria, anyos, alta);
 
             } else {
 
@@ -224,6 +231,16 @@ public class EmpleadoDAO {
         }
     }
 
+    /**
+     * Modifica un empleado en la base de datos.
+     *
+     * @param id        El ID del empleado a modificar.
+     * @param nombre    El nuevo nombre del empleado.
+     * @param dni       El nuevo DNI del empleado.
+     * @param sexo      El nuevo sexo del empleado.
+     * @param categoria La nueva categoría del empleado.
+     * @param anyos     Los nuevos años trabajados por el empleado.
+     */
     public void modificarEmpleado(int id, String nombre, String dni, char sexo, int categoria, double anyos) {
         try {
             conn = ConexionDB.getConnection();
@@ -258,6 +275,11 @@ public class EmpleadoDAO {
         }
     }
 
+    /**
+     * Da de baja a un empleado en la base de datos.
+     *
+     * @param id El ID del empleado a dar de baja.
+     */
     public void bajaEmpleado(int id) {
         try {
             conn = ConexionDB.getConnection();
@@ -288,6 +310,12 @@ public class EmpleadoDAO {
         }
     }
 
+    /**
+     * Verifica si un DNI ya existe en la base de datos.
+     *
+     * @param dni El DNI a verificar.
+     * @return true si el DNI existe, false en caso contrario.
+     */
     public boolean existeDni(String dni) {
         try {
             conn = ConexionDB.getConnection();
@@ -319,4 +347,39 @@ public class EmpleadoDAO {
         }
         return false;
     }
+
+    /**
+     * Reactiva a un empleado en la base de datos.
+     *
+     * @param id El ID del empleado a reactivar.
+     */
+    public void reactivarEmpleado(int id) {
+        try {
+            conn = ConexionDB.getConnection();
+            PreparedStatement pt = null;
+
+            String query = "UPDATE empleados SET alta = 1 WHERE id = ?";
+            pt = conn.prepareStatement(query);
+            pt.setInt(1, id);
+
+            int rowCount = pt.executeUpdate();
+
+            if (rowCount > 0) {
+                System.out.println("Empleado modificado correctamente");
+            } else {
+                System.out.println("No se encontró ningún empleado con el ID proporcionado");
+            }
+        } catch (SQLException e) {
+            System.out.println("Ocurrió algún error al conectar u operar con la BD");
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 }

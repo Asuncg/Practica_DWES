@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<script src="https://kit.fontawesome.com/b481faf5db.js" crossorigin="anonymous"></script>
 <!DOCTYPE html>
 <html>
 <head>

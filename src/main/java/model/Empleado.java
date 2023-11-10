@@ -20,6 +20,7 @@ public class Empleado extends Persona {
     public double anyos;
 
     public int id;
+    private int alta;
 
     /**
      * Constructor para crear una instancia de Empleado con nombre, DNI, sexo, categoría y
@@ -32,9 +33,10 @@ public class Empleado extends Persona {
      * @param categoria
      * @param anyos
      */
-    public Empleado(int id, String nombre, String dni, Character sexo, int categoria, double anyos) throws DatosNoCorrectosException {
+    public Empleado(int id, String nombre, String dni, Character sexo, int categoria, double anyos, int alta) throws DatosNoCorrectosException {
         super(nombre, dni, sexo);
 
+        this.alta = alta;
         this.id = id;
 
         if (categoria >= 1 && categoria <= 10) {
@@ -84,30 +86,37 @@ public class Empleado extends Persona {
     }
 
     /**
-     * Setter de la categoría
+     * Getter de anyos
      */
-
     public double getAnyos() {
         return anyos;
     }
 
+    /**
+     * Getter de nombre
+     */
     public String getNombre() {
         return super.getNombre();
     }
+
+    /**
+     * Getter de dni
+     */
     public String getDni() {
         return super.getDni();
     }
+
+    /**
+     * Getter de sexo
+     */
     public Character getSexo() {
         return super.getSexo();
     }
 
     /**
-     *
-     * Imprime los datos del Empleado en consola.
+     * Getter de alta
      */
-    @Override
-    public void imprime() {
-        super.imprime();
-        System.out.println("Categoria: " + categoria + ",Años: " + anyos);
+    public int getAlta() {
+        return alta;
     }
 }
